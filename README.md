@@ -1,5 +1,7 @@
 # Ralph Template
 
+![Ralph](assets/ralph.jpg)
+
 A simple way to run autonomous AI agent tasks. Copy this into any project, define what you want done in markdown, and let the AI do the work.
 
 Works with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and [OpenCode](https://github.com/sst/opencode).
@@ -13,6 +15,18 @@ Works with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and [Op
 - **`run.sh`** — runs a loop that has the AI complete tasks one at a time
 
 The AI reads your specs, goes through the checklist, and marks each task done.
+
+---
+
+## Why fresh context matters
+
+Each iteration starts with a clean context. The AI reads your spec fresh, completes one task, and exits. Then the loop starts again.
+
+This prevents context pollution. As conversations grow, AI agents often get confused by accumulated instructions and outputs. By resetting each time, Ralph stays predictable:
+
+- No confusion from previous iterations
+- Same spec interpretation every time
+- Tasks complete reliably even in long runs
 
 ---
 
