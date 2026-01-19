@@ -1,10 +1,12 @@
 # Ralph Template
 
-![Ralph](assets/ralph.jpg)
-
 A simple way to run autonomous AI agent tasks. Copy this into any project, define what you want done in markdown, and let the AI do the work.
 
 Works with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and [OpenCode](https://github.com/sst/opencode).
+
+![Ralph](assets/ralph.jpg)
+
+
 
 ---
 
