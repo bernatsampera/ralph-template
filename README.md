@@ -6,6 +6,10 @@ Works with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and [Op
 
 ![Ralph](assets/ralph.jpg)
 
+## Requirements
+
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or [OpenCode](https://github.com/sst/opencode)
+
 
 
 ---
@@ -15,6 +19,7 @@ Works with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and [Op
 - **`specs/`** — where you describe what needs to be done
 - **`fix_plan.md`** — a checklist of tasks for the AI to complete
 - **`run.sh`** — runs a loop that has the AI complete tasks one at a time
+- **`scripts/`** — helper scripts (output parser for colorized Claude output)
 
 The AI reads your specs, goes through the checklist, and marks each task done.
 
@@ -68,11 +73,13 @@ Keep tasks specific. One task = one thing.
 
 ```bash
 chmod +x run.sh
-./run.sh claude    # for Claude Code
-./run.sh opencode  # for OpenCode
+./run.sh claude         # Claude Code with colorized output
+./run.sh claude 10      # Run up to 10 iterations
+./run.sh claude 5 --raw # Raw JSON output (no parsing)
+./run.sh opencode       # OpenCode
 ```
 
-The AI goes through your tasks one by one until everything is done.
+The AI goes through your tasks one by one until everything is done. With Claude, you get colorized, human-readable output showing exactly what the AI is doing.
 
 ---
 

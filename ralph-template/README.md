@@ -37,9 +37,13 @@ Add checkboxes under `## High Priority`:
 ### Step 4: Run it
 
 ```bash
-./run.sh claude    # Use Claude Code
-./run.sh opencode  # Use OpenCode (default)
+./run.sh claude         # Claude Code with colorized output
+./run.sh claude 10      # Run up to 10 iterations
+./run.sh claude 5 --raw # Raw JSON output (no parsing)
+./run.sh opencode       # OpenCode (default)
 ```
+
+With Claude, you get colorized, human-readable output showing exactly what the AI is doing (tools used, reasoning, results).
 
 ---
 
@@ -108,6 +112,7 @@ cat data/result.txt
 | `specs/` | Task specifications (what to do) |
 | `fix_plan.md` | Task checklist (the AI checks these off) |
 | `run.sh` | Runs the autonomous loop |
+| `scripts/` | Helper scripts (output parser) |
 | `PROMPT.md` | Agent workflow instructions (rarely edit) |
 | `AGENT.md` | Quality standards (rarely edit) |
 

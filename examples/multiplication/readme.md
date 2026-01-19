@@ -21,6 +21,7 @@ The AI agent will:
 | `specs/` | Detailed task specifications |
 | `input/` | Input files with number pairs |
 | `output/` | Output files with results |
+| `scripts/` | Helper scripts (output parser) |
 
 ## Input Files
 
@@ -31,6 +32,29 @@ The AI agent will:
 | `input/003.txt` | 10, 2 | 20 |
 
 ## How to Run
+
+### Using run.sh (Recommended)
+
+The `run.sh` script runs Claude Code in an autonomous loop with pretty-printed, colorized output:
+
+```bash
+# Run with Claude Code (default 5 iterations, pretty output)
+./run.sh claude
+
+# Run with more iterations
+./run.sh claude 10
+
+# Run with raw JSON output (no parsing)
+./run.sh claude 5 --raw
+
+# Run with OpenCode instead
+./run.sh opencode
+```
+
+**Requirements:**
+- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed
+
+### Manual Execution
 
 Point your AI agent (Claude Code, etc.) at this folder and instruct it to:
 
