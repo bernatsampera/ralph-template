@@ -15,8 +15,8 @@ The AI agent will:
 
 | File | Purpose |
 |------|---------|
-| `AGENT.md` | Agent instructions and quality standards |
-| `PROMPT.md` | Development loop instructions for the AI |
+| `AGENT.md` | Agent instructions and quality standards | 
+| `PROMPT.md` | Development loop instructions for the AI. Almost always the same for each copy. |
 | `fix_plan.md` | Task checklist with pending/completed items |
 | `specs/` | Detailed task specifications |
 | `input/` | Input files with number pairs |

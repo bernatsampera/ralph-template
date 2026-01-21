@@ -1,0 +1,28 @@
+{
+  "name": "ralph-template",
+  "version": "1.0.0",
+  "description": "Scaffold an autonomous AI agent loop. Define tasks in markdown, let the AI execute them.",
+  "bin": {
+    "ralph-template": "./bin/ralph-template.js"
+  },
+  "files": [
+    "bin",
+    "template"
+  ],
+  "keywords": [
+    "ai",
+    "agent",
+    "claude",
+    "automation",
+    "autonomous",
+    "opencode"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/ralph-template"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  }
+}

@@ -1,13 +1,22 @@
 # Ralph Template
 
-A simple way to run autonomous AI agent tasks. Copy this into any project, define what you want done in markdown, and let the AI do the work.
+A simple way to run autonomous AI agent tasks. Define what you want done in markdown, and let the AI do the work.
 
 Works with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and [OpenCode](https://github.com/sst/opencode).
 
 ![Ralph](assets/ralph.jpg)
 
+## Quick Start
+
+```bash
+npx ralph-template my-project
+cd my-project
+./run.sh claude
+```
+
 ## Requirements
 
+- Node.js 14+
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or [OpenCode](https://github.com/sst/opencode)
 
 
@@ -39,26 +48,18 @@ This prevents context pollution. As conversations grow, AI agents often get conf
 
 ## How to use
 
-### 1. Copy the template
+### 1. Create a project
 
 ```bash
-cp -r ralph-template /path/to/your-project/ralph
-cd /path/to/your-project/ralph
+npx ralph-template my-project
+cd my-project
 ```
 
-### 2. Add to .gitignore
-
-Add ralph/ to your .gitignore file.
-
-```bash
-echo "ralph/" >> .gitignore
-```
-
-### 3. Write a spec
+### 2. Write a spec
 
 Create a file in `specs/` that explains what you want. Describe inputs, outputs, and what the AI should do.
 
-### 4. Add tasks
+### 3. Add tasks
 
 Open `fix_plan.md` and add tasks under `## High Priority`:
 
@@ -69,10 +70,9 @@ Open `fix_plan.md` and add tasks under `## High Priority`:
 
 Keep tasks specific. One task = one thing.
 
-### 5. Run
+### 4. Run
 
 ```bash
-chmod +x run.sh
 ./run.sh claude         # Claude Code with colorized output
 ./run.sh claude 10      # Run up to 10 iterations
 ./run.sh claude 5 --raw # Raw JSON output (no parsing)
