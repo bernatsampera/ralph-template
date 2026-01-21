@@ -5,6 +5,11 @@
   "scripts": {
     "start": "./run.sh claude",
     "opencode": "./run.sh opencode",
-    "start:raw": "./run.sh claude 5 --raw"
+    "start:raw": "./run.sh claude 5 --raw",
+    "ralph:save": "node scripts/ralph/save.js",
+    "ralph:load": "node scripts/ralph/load.js",
+    "ralph:list": "node scripts/ralph/list.js",
+    "ralph:new": "node scripts/ralph/new.js",
+    "ralph:current": "node scripts/ralph/current.js"
   }
 }
