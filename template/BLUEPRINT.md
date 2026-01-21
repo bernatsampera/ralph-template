@@ -114,15 +114,17 @@ Controls the iteration loop, status reporting, and exit criteria. Rarely needs m
 3. Configure `AGENT.md` for your project
 4. Write specs in `specs/`
 5. Add tasks to `fix_plan.md`
-6. Run `./run.sh claude`
+6. Run `npm start`
 
 ## Running Commands
 
 ```bash
-./run.sh claude         # Run with Claude Code (default 5 iterations)
+npm start               # Run with Claude Code (default)
+npm run opencode        # Use OpenCode instead
+npm run start:raw       # Raw JSON output
+
+# Or use run.sh directly for more control:
 ./run.sh claude 10      # Run up to 10 iterations
-./run.sh claude 5 --raw # Raw JSON output
-./run.sh opencode       # Use OpenCode instead
 ```
 
 ## Requirements

@@ -1,17 +1,33 @@
 # Ralph Template
 
-A simple way to run autonomous AI agent tasks. Define what you want done in markdown, and let the AI do the work.
+[![npm version](https://img.shields.io/npm/v/ralph-template.svg)](https://www.npmjs.com/package/ralph-template)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+**Run long AI task lists without context pollution.**
+
+Define tasks in markdown. Ralph runs them one at a time with fresh context, so your agent stays reliable even on task #50.
 
 Works with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and [OpenCode](https://github.com/sst/opencode).
 
 ![Ralph](assets/ralph.jpg)
+
+## Why Ralph?
+
+AI agents get confused in long conversations. Old instructions pile up, outputs from earlier tasks leak into later ones, and by task #15, your agent is hallucinating.
+
+Ralph fixes this with one dumb trick: **fresh context every task.**
+
+- One task runs, agent exits
+- Next iteration starts clean
+- No accumulated confusion
+- Predictable behavior on task #1 and task #100
 
 ## Quick Start
 
 ```bash
 npx ralph-template my-project
 cd my-project
-./run.sh claude
+npm start
 ```
 
 ## Requirements
@@ -31,18 +47,6 @@ cd my-project
 - **`scripts/`** — helper scripts (output parser for colorized Claude output)
 
 The AI reads your specs, goes through the checklist, and marks each task done.
-
----
-
-## Why fresh context matters
-
-Each iteration starts with a clean context. The AI reads your spec fresh, completes one task, and exits. Then the loop starts again.
-
-This prevents context pollution. As conversations grow, AI agents often get confused by accumulated instructions and outputs. By resetting each time, Ralph stays predictable:
-
-- No confusion from previous iterations
-- Same spec interpretation every time
-- Tasks complete reliably even in long runs
 
 ---
 
@@ -73,10 +77,16 @@ Keep tasks specific. One task = one thing.
 ### 4. Run
 
 ```bash
-./run.sh claude         # Claude Code with colorized output
+npm start               # Claude Code (default, colorized output)
+npm run opencode        # OpenCode
+npm run start:raw       # Raw JSON output (no parsing)
+```
+
+Or use the shell script directly for more control:
+
+```bash
 ./run.sh claude 10      # Run up to 10 iterations
 ./run.sh claude 5 --raw # Raw JSON output (no parsing)
-./run.sh opencode       # OpenCode
 ```
 
 The AI goes through your tasks one by one until everything is done. With Claude, you get colorized, human-readable output showing exactly what the AI is doing.
@@ -89,8 +99,7 @@ There's a working example in `examples/multiplication/`. It multiplies numbers f
 
 ```bash
 cd examples/multiplication
-chmod +x run.sh
-./run.sh claude
+npm start
 ```
 
 Check the results:

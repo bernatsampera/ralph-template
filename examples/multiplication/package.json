@@ -1,0 +1,10 @@
+{
+  "name": "ralph-project",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "./run.sh claude",
+    "opencode": "./run.sh opencode",
+    "start:raw": "./run.sh claude 5 --raw"
+  }
+}
