@@ -1,6 +1,6 @@
 {
   "name": "ralph-template",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Scaffold an autonomous AI agent loop. Define tasks in markdown, let the AI execute them.",
   "bin": {
     "ralph-template": "./bin/ralph-template.js"
