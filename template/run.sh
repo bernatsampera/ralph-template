@@ -64,8 +64,8 @@ for i in $(seq 1 $MAX_ITERATIONS); do
   OUTPUT=$(cat "$TEMP_OUTPUT")
   rm -f "$TEMP_OUTPUT"
 
-  # Check for exit signals in the output
-  if echo "$OUTPUT" | grep -q '"EXIT_SIGNAL": true\|EXIT_SIGNAL: true'; then
+  # Check for exit signals in the output - only within the status block
+  if echo "$OUTPUT" | sed -n '/---RALPH_STATUS---/,/---END_RALPH_STATUS---/p' | grep -q 'EXIT_SIGNAL: true\|"EXIT_SIGNAL": true'; then
     echo ""
     echo "========================================="
     echo "EXIT_SIGNAL detected - Tasks complete!"
