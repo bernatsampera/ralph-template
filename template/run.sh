@@ -64,8 +64,16 @@ for i in $(seq 1 $MAX_ITERATIONS); do
   OUTPUT=$(cat "$TEMP_OUTPUT")
   rm -f "$TEMP_OUTPUT"
 
-  # Check for exit signals in the output - only within the status block
-  if echo "$OUTPUT" | sed -n '/---RALPH_STATUS---/,/---END_RALPH_STATUS---/p' | grep -q 'EXIT_SIGNAL: true\|"EXIT_SIGNAL": true'; then
+  # Extract only the LAST status block (in case output contains multiple blocks)
+  LAST_STATUS=$(echo "$OUTPUT" | awk '
+    /---RALPH_STATUS---/ { block = ""; capturing = 1 }
+    capturing { block = block $0 "\n" }
+    /---END_RALPH_STATUS---/ { capturing = 0 }
+    END { print block }
+  ')
+
+  # Check for exit signal in the last status block only
+  if echo "$LAST_STATUS" | grep -q 'EXIT_SIGNAL: true\|"EXIT_SIGNAL": true'; then
     echo ""
     echo "========================================="
     echo "EXIT_SIGNAL detected - Tasks complete!"
