@@ -47,6 +47,23 @@ print_separator() {
   printf "${DIM}----------------------------------------${RESET}\n"
 }
 
+# Print tool action in compact format: |  ToolName   description
+print_tool_action() {
+  local tool="$1"
+  local desc="$2"
+  local color
+
+  case "$tool" in
+    Read|Glob|Grep) color="$BLUE" ;;
+    Write) color="$GREEN" ;;
+    Edit) color="$YELLOW" ;;
+    Bash) color="$RED" ;;
+    *) color="$CYAN" ;;
+  esac
+
+  printf "${color}|${RESET}  ${DIM}%-8s${RESET} %s\n" "$tool" "$desc"
+}
+
 while IFS= read -r line; do
   # Skip empty lines
   [ -z "$line" ] && continue
@@ -86,33 +103,32 @@ while IFS= read -r line; do
         tool_name=$(echo "$line" | grep -o '"name":"[^"]*"' | head -1 | sed 's/"name":"\([^"]*\)"/\1/')
       fi
 
-      print_separator
-      printf "${BOLD}${YELLOW}TOOL:${RESET} ${BRIGHT_YELLOW}%s${RESET}\n" "$tool_name"
+      # Build description based on tool type
+      desc=""
 
       # Extract file_path if present
       file_path=$(echo "$line" | grep -o '"file_path":"[^"]*"' | head -1 | sed 's/"file_path":"\([^"]*\)"/\1/')
       if [ -n "$file_path" ]; then
-        case "$tool_name" in
-          Read)
-            printf "Reading file: ${CYAN}%s${RESET}\n" "$file_path"
-            ;;
-          Write)
-            printf "Writing file: ${CYAN}%s${RESET}\n" "$file_path"
-            ;;
-          Edit)
-            printf "Editing file: ${CYAN}%s${RESET}\n" "$file_path"
-            ;;
-          *)
-            printf "File: ${CYAN}%s${RESET}\n" "$file_path"
-            ;;
-        esac
+        desc="$file_path"
       fi
 
-      # Extract command if Bash tool
+      # Extract command description if Bash tool
       if [ "$tool_name" = "Bash" ]; then
-        cmd=$(echo "$line" | grep -o '"command":"[^"]*"' | head -1 | sed 's/"command":"\([^"]*\)"/\1/' | sed 's/\\"/"/g')
-        if [ -n "$cmd" ]; then
-          printf "Command: ${DIM}%s${RESET}\n" "$cmd"
+        # Try to get description first
+        bash_desc=$(echo "$line" | grep -o '"description":"[^"]*"' | head -1 | sed 's/"description":"\([^"]*\)"/\1/')
+        if [ -n "$bash_desc" ]; then
+          desc="$bash_desc"
+        else
+          # Fall back to command (truncated)
+          cmd=$(echo "$line" | grep -o '"command":"[^"]*"' | head -1 | sed 's/"command":"\([^"]*\)"/\1/' | sed 's/\\"/"/g')
+          if [ -n "$cmd" ]; then
+            # Truncate long commands
+            if [ ${#cmd} -gt 50 ]; then
+              desc="${cmd:0:47}..."
+            else
+              desc="$cmd"
+            fi
+          fi
         fi
       fi
 
@@ -120,10 +136,11 @@ while IFS= read -r line; do
       if [ "$tool_name" = "Glob" ] || [ "$tool_name" = "Grep" ]; then
         pattern=$(echo "$line" | grep -o '"pattern":"[^"]*"' | head -1 | sed 's/"pattern":"\([^"]*\)"/\1/')
         if [ -n "$pattern" ]; then
-          printf "Pattern: ${CYAN}%s${RESET}\n" "$pattern"
+          desc="$pattern"
         fi
       fi
-      echo
+
+      print_tool_action "$tool_name" "$desc"
 
     elif echo "$line" | grep -q '"type"[[:space:]]*:[[:space:]]*"text"'; then
       # Text content
@@ -131,23 +148,17 @@ while IFS= read -r line; do
       text=$(echo "$line" | sed 's/.*"text"[[:space:]]*:[[:space:]]*"//' | sed 's/"[[:space:]]*}.*$//' | sed 's/\\n/\n/g' | sed 's/\\"/"/g')
 
       if [ -n "$text" ] && [ "$text" != "$line" ]; then
-        print_separator
-        printf "${BOLD}${BRIGHT_MAGENTA}CLAUDE SAYS:${RESET}\n"
-        printf "${WHITE}%s${RESET}\n" "$text"
-        echo
+        printf "%s\n" "$text"
       fi
     fi
 
   elif echo "$line" | grep -q '"type"[[:space:]]*:[[:space:]]*"user"'; then
-    # Tool result
+    # Tool result - only show errors
     if echo "$line" | grep -q '"type"[[:space:]]*:[[:space:]]*"tool_result"'; then
-      # Check for errors
       if echo "$line" | grep -q "tool_use_error"; then
-        printf "  -> ${BRIGHT_RED}Error:${RESET} (see output)\n"
-      else
-        printf "  -> ${GREEN}Result:${RESET} (received)\n"
+        printf "${RED}|${RESET}  ${BRIGHT_RED}Error${RESET}   (see output)\n"
       fi
-      echo
+      # Success results are silent
     fi
 
   elif echo "$line" | grep -q '"type"[[:space:]]*:[[:space:]]*"result"'; then
