@@ -16,3 +16,4 @@
 - Tasks are completed ONE at a time by the agent
 - Be specific: describe exactly what to read, what to do, and what to write
 - Mark tasks complete with [x] after verification
+- Just one iteration for task. Exit after completing the task.
