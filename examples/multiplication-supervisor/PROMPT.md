@@ -22,16 +22,18 @@ Complete the tasks defined in @fix_plan.md according to the specifications in @s
 ### Workflow
 
 1. **Study Specs**: Read files in @specs/ to understand the task requirements
-2. **Check Plan**: Review @fix_plan.md for pending tasks
-3. **Execute ONE TASK**: Pick the FIRST uncompleted task (`- [ ]` item):
+2. **Check Supervisor Notes**: Read @specs/supervisor-notes.md if it exists for any guidance from the supervisor
+3. **Check Plan**: Review @fix_plan.md for pending tasks
+4. **Execute ONE TASK**: Pick the FIRST uncompleted task (`- [ ]` item):
    - Read the relevant spec from @specs/
    - Analyze source files from the parent codebase (`../`)
    - Generate documentation with code snippets
    - Write to `content/` directory
-4. **Update Plan**: Mark ONLY that task as completed with `[x]` in @fix_plan.md
-5. **Report Status and STOP**: Output RALPH_STATUS block and **END YOUR RESPONSE IMMEDIATELY**
+5. **Update Plan**: Mark ONLY that task as completed with `[x]` in @fix_plan.md
+6. **Write Task Report**: Append a report to @specs/report.md (see Task Reporting section below)
+7. **Report Status and STOP**: Output RALPH_STATUS block and **END YOUR RESPONSE IMMEDIATELY**
 
-**HARD STOP**: After step 5, your response MUST end. Do NOT continue to the next task. Do NOT add any text after the status block. The next task will be processed in a new iteration.
+**HARD STOP**: After step 7, your response MUST end. Do NOT continue to the next task. Do NOT add any text after the status block. The next task will be processed in a new iteration.
 
 ## Iteration Scope Limits (CRITICAL)
 
@@ -62,6 +64,28 @@ Exit the loop ONLY when ALL of these conditions are met:
 - All items in @fix_plan.md are marked complete
 - All expected outputs exist in `content/` with correct content
 - All acceptance criteria from @specs/ are satisfied
+
+## Task Reporting (CRITICAL - Supervisor needs this!)
+
+After completing (or failing) each task, APPEND a report to @specs/report.md:
+
+```markdown
+---
+## Task Report - [task identifier]
+
+- **Task**: <description from fix_plan.md>
+- **Status**: SUCCESS | FAILED | BLOCKED
+- **Attempt**: <attempt number, check previous reports for this task>
+- **Errors**: <error messages if any, or "none">
+- **Output**: <what was produced, or "nothing">
+- **Notes**: <observations, difficulties encountered>
+---
+```
+
+### Important
+- APPEND to the file, do NOT overwrite previous reports
+- The supervisor reads this file to track progress and detect problems
+- Include the attempt number so supervisor knows if this is a retry
 
 ## Status Reporting (CRITICAL - Ralph needs this!)
 
