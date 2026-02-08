@@ -1,5 +1,9 @@
 # Ralph Template
 
+<a href="assets/RalphVideo.mp4">
+  <img src="assets/ralph-thumbnail.jpg" alt="Ralph Demo Video" width="100%">
+</a>
+
 Ralph is an autonomous AI agent loop that executes tasks with fresh context. Each task runs in isolation, preventing context pollution that degrades AI performance in long conversations.
 
 ## The Problem Ralph Solves
