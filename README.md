@@ -23,7 +23,7 @@ In long AI conversations, agents lose reliability as old instructions and output
 
 Example prompt for claude code: ```Read ralph/blueprint.md and create a ralph setup for the following task bug_fix.md. In fix_plan.md create a section for each folder that needs to be fixed. Create two tasks for each section to fix the bugs. The first task will be to create a specs/folder_name/analyse.md witht he problem and a possible solution. Then the next task will be to read these file just generated and implement the solution. ```
 
-1. **Run the loop**
+4. **Run the loop**
    ```bash
    npm start 20
    ```

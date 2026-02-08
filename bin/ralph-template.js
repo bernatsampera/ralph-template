@@ -2,6 +2,13 @@
 
 const fs = require('fs');
 const path = require('path');
+const { version } = require('../package.json');
+
+// Handle --version / -v flag
+if (process.argv.includes('--version') || process.argv.includes('-v')) {
+  console.log(`ralph-template v${version}`);
+  process.exit(0);
+}
 
 const targetDir = process.argv[2] || 'ralph-project';
 const templateDir = path.join(__dirname, '..', 'template');
