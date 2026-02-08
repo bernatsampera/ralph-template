@@ -1,46 +1,15 @@
 const fs = require('fs');
-const path = require('path');
 const {
   TEMPLATE_PATH,
-  VERSIONED_FILES,
-  VERSIONED_DIRS,
   color,
   setCurrent,
   hasUnsavedChanges,
   matchesTemplate,
   promptUser,
-  copyDir,
-  removeDir,
+  saveCurrentFirst,
+  copyVersionedContent,
+  clearVersionedContent,
 } = require('./utils');
-
-async function saveCurrentFirst() {
-  const readline = require('readline');
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-
-  return new Promise((resolve) => {
-    rl.question('Enter name to save current configuration: ', async (name) => {
-      rl.close();
-      if (name.trim()) {
-        // Run save script
-        const { execSync } = require('child_process');
-        try {
-          execSync(`node ${path.join(__dirname, 'save.js')} "${name.trim()}"`, {
-            stdio: 'inherit',
-          });
-          resolve(true);
-        } catch (err) {
-          resolve(false);
-        }
-      } else {
-        console.log('Save cancelled.');
-        resolve(false);
-      }
-    });
-  });
-}
 
 async function main() {
   // Check if template exists
@@ -78,42 +47,9 @@ async function main() {
     }
   }
 
-  // Clear existing versioned files
-  for (const file of VERSIONED_FILES) {
-    const filePath = path.join(process.cwd(), file);
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-    }
-  }
-
-  // Clear existing versioned directories
-  for (const dir of VERSIONED_DIRS) {
-    const dirPath = path.join(process.cwd(), dir);
-    if (fs.existsSync(dirPath)) {
-      removeDir(dirPath);
-    }
-  }
-
-  // Copy from template
-  let filesCopied = 0;
-  for (const file of VERSIONED_FILES) {
-    const srcPath = path.join(TEMPLATE_PATH, file);
-    const destPath = path.join(process.cwd(), file);
-    if (fs.existsSync(srcPath)) {
-      fs.copyFileSync(srcPath, destPath);
-      filesCopied++;
-    }
-  }
-
-  let dirsCopied = 0;
-  for (const dir of VERSIONED_DIRS) {
-    const srcPath = path.join(TEMPLATE_PATH, dir);
-    const destPath = path.join(process.cwd(), dir);
-    if (fs.existsSync(srcPath)) {
-      copyDir(srcPath, destPath);
-      dirsCopied++;
-    }
-  }
+  // Clear existing versioned content and copy from template
+  clearVersionedContent();
+  const { filesCopied, dirsCopied } = copyVersionedContent(TEMPLATE_PATH, process.cwd());
 
   // Clear current (no version loaded)
   setCurrent(null);
