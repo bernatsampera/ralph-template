@@ -21,9 +21,16 @@ In long AI conversations, agents lose reliability as old instructions and output
 
 3. **Set up your tasks** (see "Setting Up Ralph" section below)
 
-Example prompt for claude code: ```Read ralph/blueprint.md and create a ralph setup for the following task bug_fix.md. In fix_plan.md create a section for each folder that needs to be fixed. Create two tasks for each section to fix the bugs. The first task will be to create a specs/folder_name/analyse.md witht he problem and a possible solution. Then the next task will be to read these file just generated and implement the solution. ```
+   Example prompt for Claude Code:
+   ```
+   Read ralph/PROMPT.md and create a ralph setup for bug_fix.md.
+   In fix_plan.md create a section for each folder that needs fixing.
+   For each section, create two tasks:
+   1. Create specs/folder_name/analyse.md with the problem and solution
+   2. Read that file and implement the solution
+   ```
 
-1. **Run the loop**
+4. **Run the loop**
    ```bash
    npm start 20
    ```
