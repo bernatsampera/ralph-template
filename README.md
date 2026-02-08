@@ -49,7 +49,7 @@ The easiest way to set up Ralph is to ask Claude Code to generate the files for 
 ### Prompt Template
 
 ```
-Read ralph/PROMPT.md to understand how Ralph works.
+Read ralph/blueprint.md to understand how Ralph works.
 I want to create a ralph setup for [YOUR GOAL].
 
 [DESCRIBE: files, directories, or problems to work on]
@@ -62,7 +62,7 @@ Add detailed specs in specs/ for each task type.
 
 **Extracting endpoint information:**
 ```
-Read ralph/PROMPT.md. I want to create a ralph setup for extracting
+Read ralph/blueprint.md. I want to create a ralph setup for extracting
 information from @missing_endpoints.json. There is a guide in
 ralph/specs/extract_plan.md showing what info is needed. Add tasks
 in fix_plan to extract info for each endpoint.
@@ -70,7 +70,7 @@ in fix_plan to extract info for each endpoint.
 
 **Improving tests:**
 ```
-Read ralph/PROMPT.md. I want to create a ralph loop to improve tests
+Read ralph/blueprint.md. I want to create a ralph loop to improve tests
 in @test/migration/. Add in fix_plan.md an iterative process that
 runs 5-6 iterations, writes findings, then starts a new loop based
 on those findings.
@@ -78,7 +78,7 @@ on those findings.
 
 **Analyzing and fixing errors:**
 ```
-Read ralph/PROMPT.md. I get 42 failed tests when running pnpm test.
+Read ralph/blueprint.md. I get 42 failed tests when running pnpm test.
 Create a ralph loop to analyze each failing test. For each test,
 create specs/test-name/ with problem.md and solution.md files.
 Do not implement fixes during the loop, just document them.
@@ -86,7 +86,7 @@ Do not implement fixes during the loop, just document them.
 
 **Code quality improvements:**
 ```
-Read ralph/PROMPT.md. Create a ralph setup for @docs/improvements.md
+Read ralph/blueprint.md. Create a ralph setup for @docs/improvements.md
 which has multiple sections. For each section: first create a task
 to write a plan in specs/section_name/plan.md, then a task to
 implement it, then a task to run tests.
@@ -94,7 +94,7 @@ implement it, then a task to run tests.
 
 **Multi-step analysis:**
 ```
-Read ralph/PROMPT.md. I want to create a ralph setup for src/steps/.
+Read ralph/blueprint.md. I want to create a ralph setup for src/steps/.
 Create an initial task to understand the directory and write findings
 to specs/context.md. Then for each step, add a task to analyze it
 and write specs/step_name/details.md, followed by a task to
