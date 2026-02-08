@@ -16,6 +16,7 @@ WORKER_PROMPT="Read PROMPT.md and complete all tasks in fix_plan.md"
 SUPERVISOR_PROMPT="Read SUPERVISOR_PROMPT.md and evaluate progress"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LIB_DIR="$SCRIPT_DIR/../../lib"
 cd "$SCRIPT_DIR"
 
 # Build commands based on selected tool
@@ -63,7 +64,7 @@ for i in $(seq 1 $MAX_ITERATIONS); do
     else
       # Pretty-printed output via parser
       # Capture raw JSON to temp file while piping to parser for display
-      eval $WORKER_CMD 2>&1 | tee "$TEMP_OUTPUT" | bash scripts/parse_claude_output.sh || true
+      eval $WORKER_CMD 2>&1 | tee "$TEMP_OUTPUT" | bash "$LIB_DIR/parse_claude_output.sh" || true
     fi
   else
     eval $WORKER_CMD 2>&1 | tee "$TEMP_OUTPUT" || true
@@ -110,7 +111,7 @@ for i in $(seq 1 $MAX_ITERATIONS); do
     if [ "$RAW_OUTPUT" = "--raw" ]; then
       eval $SUPERVISOR_CMD 2>&1 | tee "$TEMP_OUTPUT" || true
     else
-      eval $SUPERVISOR_CMD 2>&1 | tee "$TEMP_OUTPUT" | bash scripts/parse_claude_output.sh || true
+      eval $SUPERVISOR_CMD 2>&1 | tee "$TEMP_OUTPUT" | bash "$LIB_DIR/parse_claude_output.sh" || true
     fi
   else
     eval $SUPERVISOR_CMD 2>&1 | tee "$TEMP_OUTPUT" || true
