@@ -52,11 +52,13 @@ npm run ralph:new                 # reset to blank
 
 You are setting up Ralph, not running it. **Create configuration files. Nothing else.**
 
+<!-- RECIPE_INSTRUCTIONS_START -->
 ### You MUST:
 1. Read the project's codebase to understand what needs to be done
 2. Create tasks in `fix_plan.md` as checkbox items (`- [ ]`)
 3. Create at most 1 spec file in `specs/` with context the tasks will need
 4. Optionally update `AGENT.md` with project-specific configuration
+<!-- RECIPE_INSTRUCTIONS_END -->
 
 ### You must NOT:
 - Execute, implement, or start working on any task in fix_plan.md
