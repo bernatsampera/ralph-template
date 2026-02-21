@@ -2,42 +2,42 @@
 
 Ralph is an autonomous agent loop that executes tasks one at a time using fresh context per iteration.
 
-## File Reference
+---
 
-| File | Purpose |
-|------|---------|
-| `AGENT.md` | Project configuration: structure, commands, quality standards |
-| `fix_plan.md` | Task checklist with priorities and categories |
-| `specs/` | Detailed specifications for each task |
-| `PROMPT.md` | Ralph loop logic (rarely needs changes) |
+## STOP: YOUR ROLE IS PLANNING ONLY
+
+You are being asked to **set up** Ralph, not to **run** it.
+
+**Your job is to create configuration files. Nothing else.**
+
+### What you MUST do:
+1. Read the project's codebase to understand what needs to be done
+2. Create tasks in `fix_plan.md` as checkbox items (`- [ ]`)
+3. Create at most 1 spec file in `specs/` with context the tasks will need
+4. Optionally update `AGENT.md` with project-specific configuration
+
+### What you must NOT do:
+- Execute, implement, or start working on any task listed in fix_plan.md
+- Modify, fix, or change any files outside the ralph/ directory
+- Run tests, build commands, or any project commands
+- Run `npm start`, `./run.sh`, or trigger the Ralph loop
+- Read or modify `PROMPT.md` (that file is for execution, not setup)
+
+### Why this matters:
+The tasks you write will be executed LATER by the Ralph loop (`npm start`), one task per iteration, with fresh AI context each time. Ralph exists specifically to prevent context degradation — if you execute tasks now in a long conversation, quality degrades after 15-20 tasks. **If you execute tasks during setup, you defeat Ralph's entire purpose.**
+
+**After creating fix_plan.md (and optionally specs/ and AGENT.md), STOP. Your work is done.**
 
 ---
 
-## AGENT.md - Project Configuration
+## File Reference
 
-Contains repository config, available commands, and quality standards.
-
-```markdown
-# Agent Instructions
-
-## Project Overview
-[What this project does]
-
-## Structure
-[Key directories and their purpose]
-
-## Commands
-[Available commands to run]
-
-## Quality Standards
-[Validation requirements for this project]
-
-## Task Completion Checklist
-- [ ] Task requirements understood
-- [ ] Operation performed correctly
-- [ ] Output verified
-- [ ] fix_plan.md updated
-```
+| File | Purpose | Setup role |
+|------|---------|------------|
+| `fix_plan.md` | Task checklist with priorities and categories | **Create/populate** |
+| `specs/` | Detailed specifications for tasks | **Create at most 1 file** |
+| `AGENT.md` | Project configuration: structure, commands, quality standards | **Optionally update** |
+| `PROMPT.md` | Ralph loop logic (execution instructions) | **Do not touch** |
 
 ---
 
@@ -72,11 +72,17 @@ Tasks structured with checkboxes, ordered by priority, grouped into categories.
 - Mark tasks complete with [x] after verification
 ```
 
+### Writing good tasks:
+- **Be specific**: "Read src/auth.js, find the JWT validation function, fix the expiry check" not "Fix auth"
+- **One action per task**: Each checkbox = one Ralph iteration
+- **Include file paths**: Tell the AI exactly which files to read and modify
+- **Include verification**: How to confirm the task succeeded
+
 ---
 
 ## specs/ - Task Specifications
 
-Each spec file contains details for a specific task or feature.
+Create spec files when tasks need detailed context that does not fit in a checkbox description.
 
 ```markdown
 # [Task Name] Spec
@@ -95,38 +101,49 @@ Each spec file contains details for a specific task or feature.
 
 ---
 
-## PROMPT.md - Ralph Logic
+## AGENT.md - Project Configuration
 
-Controls the iteration loop, status reporting, and exit criteria. Rarely needs modification.
+Contains repository config, available commands, and quality standards.
 
-**What it defines:**
-- One task per iteration workflow
-- RALPH_STATUS block format
-- Exit triggers and completion criteria
-- Constraints to prevent infinite loops
+```markdown
+# Agent Instructions
+
+## Project Overview
+[What this project does]
+
+## Structure
+[Key directories and their purpose]
+
+## Commands
+[Available commands to run]
+
+## Quality Standards
+[Validation requirements for this project]
+
+## Task Completion Checklist
+- [ ] Task requirements understood
+- [ ] Operation performed correctly
+- [ ] Output verified
+- [ ] fix_plan.md updated
+```
 
 ---
 
-## Quick Start
+## PROMPT.md - Ralph Logic
 
-1. Copy `ralph-template/` to your project
-2. Add to `.gitignore` (optional)
-3. Configure `AGENT.md` for your project
-4. Write specs in `specs/`
-5. Add tasks to `fix_plan.md`
-6. Run `npm start`
+Controls the iteration loop, status reporting, and exit criteria during execution.
+**This file is used by `npm start`. Do not read or modify it during setup.**
 
-## Running Commands
+---
 
-```bash
-npm start               # Run with Claude Code (default)
-npm run opencode        # Use OpenCode instead
-npm run start:raw       # Raw JSON output
+## Setup Complete Checklist
 
-# Or use run.sh directly for more control:
-./run.sh claude 10      # Run up to 10 iterations
-```
+Before you finish, verify:
+- [ ] `fix_plan.md` has specific, actionable checkbox tasks (`- [ ]`)
+- [ ] Each task describes exactly what to read, do, and write
+- [ ] At most 1 spec file exists in `specs/` (if needed)
+- [ ] No tasks have been executed — all checkboxes are still unchecked
+- [ ] No files outside `ralph/` have been modified
+- [ ] `PROMPT.md` has not been modified
 
-## Requirements
-
-- Claude Code or OpenCode CLI installed
+**You are done. STOP HERE. The user will run `npm start` to execute the tasks.**

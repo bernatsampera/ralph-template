@@ -1,5 +1,7 @@
 # Fix Plan
 
+<!-- SETUP AGENT: Only populate this file with tasks, then STOP. Do NOT execute any tasks. They will be run by `npm start`. -->
+
 ## High Priority
 
 <!-- Add your tasks here, one per line with [ ] checkbox -->
