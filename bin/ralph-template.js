@@ -25,7 +25,7 @@ try {
   console.log('Next steps:');
   console.log(`  cd ${targetDir}`);
   console.log('  # Edit specs/ and fix_plan.md manually, or describe your project');
-  console.log('  # and let Claude set them up for you (see BLUEPRINT.md)');
+  console.log('  # and let Claude set them up for you (see README.md)');
   console.log('  npm start\n');
 } catch (err) {
   console.error('Error creating project:', err.message);

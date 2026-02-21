@@ -14,7 +14,7 @@ npx ralph-template ralph
 Then tell your AI what tasks to create:
 
 ```
-Read ralph/blueprint.md and create a ralph setup for [YOUR GOAL].
+Read ralph/README.md and create a ralph setup for [YOUR GOAL].
 [Describe what needs to be done.]
 Do NOT execute any tasks — only create the plan files.
 ```
@@ -39,7 +39,7 @@ Ralph picks up tasks one by one, each in a fresh invocation. Open `fix_plan.md` 
 | `specs/` | Extra context for tasks that need it |
 | `AGENT.md` | Project config and quality standards |
 | `PROMPT.md` | Loop logic — **don't modify** |
-| `BLUEPRINT.md` | What the AI reads during setup |
+| `README.md` | Setup instructions (for you and the AI) |
 
 ## Config Management
 
