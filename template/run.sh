@@ -14,6 +14,9 @@ RAW_OUTPUT=${3:-""} # Optional --raw flag
 
 PROMPT="Read PROMPT.md and complete all tasks in fix_plan.md"
 
+INTERRUPTED=0
+trap 'INTERRUPTED=1; echo ""; echo "Ctrl+C detected — stopping after this iteration..."' INT
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
@@ -58,6 +61,16 @@ for i in $(seq 1 $MAX_ITERATIONS); do
     fi
   else
     eval $CMD 2>&1 | tee "$TEMP_OUTPUT" || true
+  fi
+
+  # Check if user pressed Ctrl+C during this iteration
+  if [ "$INTERRUPTED" -eq 1 ]; then
+    echo ""
+    echo "========================================="
+    echo "Interrupted by user (Ctrl+C)"
+    echo "========================================="
+    rm -f "$TEMP_OUTPUT"
+    exit 130
   fi
 
   # Read the output for exit signal detection
