@@ -32,16 +32,13 @@ The system is organized as a tree. Each level narrows the scope and increases th
 subject-root/
 ├── llms.txt                           ← Level 1: Subject-wide orientation
 ├── getting-started/
-│   ├── llms.txt                       ← Level 2: Major topic hub
-│   ├── installation.md                ← Leaf doc (linked from Level 2)
-│   └── configuration.md              ← Leaf doc
+│   └── llms.txt                       ← Level 2: Major topic hub (links to original URLs)
 ├── core-concepts/
-│   ├── llms.txt                       ← Level 2: Another major topic
+│   ├── llms.txt                       ← Level 2: Another major topic (links to original URLs)
 │   └── topic-a/
-│       ├── llms.txt                   ← Level 3: Detailed sub-topic
-│       └── details.md                ← Leaf doc
+│       └── llms.txt                   ← Level 3: Detailed sub-topic (links to original URLs)
 └── reference/
-    └── llms.txt                       ← Level 2: Reference hub
+    └── llms.txt                       ← Level 2: Reference hub (links to original URLs)
 ```
 
 ### Level 1 — Root
@@ -66,7 +63,7 @@ subject-root/
 **Content:**
 - Topic name and one-sentence description
 - Brief context paragraph (1-2 paragraphs of prose)
-- Links to leaf documentation files (detailed explanations, reference content, examples)
+- Links to original source URLs (documentation pages, reference content, examples)
 - Links to Level 3 `llms.txt` files for complex sub-topics
 
 ### Level 3 — Sub-topic
@@ -78,7 +75,7 @@ subject-root/
 **Content:**
 - Sub-topic name and one-sentence description
 - Brief context paragraph (what this area covers, key distinctions)
-- Links to specific content files grouped by category
+- Links to original source URLs grouped by category
 - Each link describes what that specific resource contains
 
 ## File Format
@@ -95,12 +92,12 @@ distinctions, or domain knowledge the reader needs before going deeper.
 
 ## Section Name
 
-- [Link Text](relative/path/to/target): Description of what the reader will find at this path
-- [Another Link](another/path): What this target contains and why it matters
+- [Link Text](https://docs.example.com/getting-started/install): Description of what the reader will find at this URL
+- [Another Link](another-topic/llms.txt): What this sub-topic covers and why it matters
 
 ## Another Section
 
-- [More Links](path/to/file): Always with a description
+- [More Links](https://docs.example.com/reference/api): Always with a description
 ```
 
 ### Format Rules
@@ -111,13 +108,18 @@ distinctions, or domain knowledge the reader needs before going deeper.
 - **Sections** (`## H2`): Group links by category. Use clear, descriptive names.
 - **Links** (`- [text](path): description`): Every link must have a colon-separated description. The description says *what is inside*, not just the file name.
 
-## Leaf Documentation Files
+## Link Targets: Original URLs vs Local Files
 
-Not every doc needs to be a `llms.txt`. Terminal documentation files (detailed explanations, reference tables, examples, how-tos) are regular Markdown files linked from a `llms.txt`. These contain the actual detailed content.
+When the source material lives at a URL (documentation sites, API references, websites), the `llms.txt` files should link directly to those original URLs. **Do NOT create local `.md` files to store content that already exists at a URL.**
+
+Create local `.md` leaf files only when:
+- The source material has no URL (e.g., documenting a book or concept from your own knowledge)
+- The content is **synthesized** from dispersed sources and doesn't exist anywhere online as a single page (e.g., a decision framework comparing tax models, a strategy guide by user profile, a cross-cutting comparison that combines information scattered across multiple pages)
 
 The distinction:
-- **`llms.txt`** = navigation node (links to other files)
-- **Leaf `.md` files** = content nodes (contain actual documentation)
+- **`llms.txt`** = navigation node (links to other `llms.txt` files or to original URLs)
+- **Original URLs** = the actual source pages (preferred — always link to these when available)
+- **Local `.md` files** = synthesized content that doesn't exist anywhere online, or content with no source URL
 
 ## Adapting to Different Subject Types
 
@@ -125,25 +127,25 @@ The distinction:
 - Root llms.txt maps to the docs homepage
 - Level 2 maps to major doc sections (Getting Started, API Reference, Guides, etc.)
 - Level 3 maps to complex sub-sections
-- Leaf files contain summarized reference content, key patterns, and examples
+- Leaf entries link directly to the original documentation pages
 
 ### Books
 - Root llms.txt maps to the table of contents
 - Level 2 maps to parts or major chapters
 - Level 3 maps to individual chapters or sub-chapters
-- Leaf files contain chapter summaries, key concepts, and notable examples
+- Leaf files may be local `.md` summaries since book content typically has no URL
 
 ### API References
 - Root llms.txt maps to the API overview
 - Level 2 maps to resource groups or major endpoint categories
 - Level 3 maps to individual resources with multiple endpoints
-- Leaf files contain endpoint details, request/response schemas, and examples
+- Leaf entries link directly to the original API reference pages
 
 ### Websites / Knowledge Bases
 - Root llms.txt maps to the site's overall purpose and structure
 - Level 2 maps to major content areas or categories
 - Level 3 maps to detailed sub-categories
-- Leaf files contain summarized content from key pages
+- Leaf entries link directly to the original web pages
 
 ## When to Create Each Level
 
@@ -153,7 +155,8 @@ The distinction:
 | Major topic area with multiple sub-topics | Create a Level 2 `llms.txt` |
 | Complex sub-topic with 5+ content items | Create a Level 3 `llms.txt` |
 | Simple sub-topic with 1-3 items | Add inline entries in the parent `llms.txt` |
-| Detailed content (explanations, references) | Create a leaf `.md` file linked from the nearest `llms.txt` |
+| Detailed content with a source URL | Link directly to the original URL from the nearest `llms.txt` |
+| Synthesized content not available at any URL | Create a local `.md` file linked from the nearest `llms.txt` |
 
 ## Common Mistakes
 
@@ -162,6 +165,7 @@ The distinction:
 - **Skipping levels.** Do not link from the root directly to leaf content files. Each level should link to the next level down.
 - **Duplicating content across levels.** Each level has its own job. If two files say the same thing, one of them is unnecessary.
 - **Too many leaf files for simple subjects.** Not every topic needs its own file. For small subjects, fewer levels with more inline content is better.
+- **Creating local `.md` files for content that already has a URL.** Link to the original source instead of duplicating content locally. Only create local files for synthesized content that doesn't exist anywhere online.
 
 ## Summary
 
@@ -170,9 +174,11 @@ The `llms.txt` system is a tree of navigation files:
 ```
 Root llms.txt              → "What is this subject about?"
   └── Topic llms.txt       → "What does this area cover?"
-        ├── Leaf docs      → Detailed reference content
+        ├── Original URLs  → Links to actual source pages
+        ├── Local .md      → Synthesized content (only when no URL exists)
         └── Sub-topic llms.txt → "What specific content exists here?"
-              └── Leaf docs
+              ├── Original URLs
+              └── Local .md
 ```
 
-Each file answers one question, links to the next level of detail, and describes every link with a one-liner. The result: any reader (human or AI) can navigate the subject efficiently without linear scanning.
+Each file answers one question, links to the next level of detail, and describes every link with a one-liner. Links point to the original source URLs whenever possible. The result: any reader (human or AI) can navigate the subject efficiently without linear scanning.
