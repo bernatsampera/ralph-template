@@ -65,6 +65,13 @@ To see all available recipes:
 npx ralph-template --list-recipes
 ```
 
+### Available recipes
+
+| Recipe | Description |
+|--------|-------------|
+| `llms-txt` | Add hierarchical llms.txt documentation to a project |
+| `llms-txt-general` | Create hierarchical llms.txt documentation for any subject (website, book, API, docs, etc.) |
+
 ### Creating a new recipe
 
 A recipe is a folder inside `recipes/` with this structure:
