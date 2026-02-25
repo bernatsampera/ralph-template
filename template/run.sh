@@ -12,7 +12,7 @@ TOOL=${1:-opencode} # Default to OpenCode if no tool specified
 MAX_ITERATIONS=${2:-5} # Default to 5 iterations if no max iterations specified
 RAW_OUTPUT=${3:-""} # Optional --raw flag
 
-PROMPT="Read PROMPT.md and complete all tasks in fix_plan.md"
+PROMPT="Read PROMPT.md then complete ONLY the first unchecked task in fix_plan.md. After completing ONE task, output the RALPH_STATUS block and stop."
 
 INTERRUPTED=0
 trap 'INTERRUPTED=1; echo ""; echo "Ctrl+C detected — stopping after this iteration..."' INT
@@ -24,7 +24,7 @@ cd "$SCRIPT_DIR"
 case "$TOOL" in
   claude)
     # Use stream-json for structured output with verbose flag
-    CMD="claude -p \"$PROMPT\" --dangerously-skip-permissions --print --output-format stream-json --verbose"
+    CMD="claude -p \"$PROMPT\" --dangerously-skip-permissions --print --output-format stream-json --verbose --append-system-prompt \"CRITICAL: Complete exactly ONE task from fix_plan.md per invocation. After marking one checkbox done and outputting RALPH_STATUS, end your response immediately. Do not start the next task.\""
     ;;
   opencode)
     CMD="opencode run \"$PROMPT\""

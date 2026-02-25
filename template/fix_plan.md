@@ -1,5 +1,6 @@
 # Fix Plan
 
+<!-- RULE: Complete ONE task per iteration, then output RALPH_STATUS and STOP. Do NOT continue to the next task. -->
 <!-- SETUP AGENT: Only populate this file with tasks, then STOP. Do NOT execute any tasks. They will be run by `npm start`. -->
 
 ## High Priority

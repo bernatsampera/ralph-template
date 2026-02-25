@@ -71,6 +71,7 @@ npx ralph-template --list-recipes
 |--------|-------------|
 | `llms-txt` | Add hierarchical llms.txt documentation to a project |
 | `llms-txt-general` | Create hierarchical llms.txt documentation for any subject (website, book, API, docs, etc.) |
+| `self-improve` | Analyze, evaluate, and implement clear-win improvements for any part of a project |
 
 ### Creating a new recipe
 
