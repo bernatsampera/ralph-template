@@ -5,15 +5,34 @@ AI agent loop. Each task runs in a fresh invocation — no context pollution.
 
 https://github.com/user-attachments/assets/a13c7307-2504-4bb7-82cc-b658d9f9acc0
 
-## Quick Start
+## Install
 
 ```bash
+npm install -g ralphmd
+```
+
+## Getting Started
+
+1. **Initialize** — drop a config file in your project:
+
+```bash
+cd your-project
 ralphmd init
+```
+
+2. **Plan** — describe what you want and the AI creates structured tasks:
+
+```bash
 ralphmd plan "Refactor the auth module into separate files"
+```
+
+3. **Run** — execute tasks one at a time in fresh AI invocations:
+
+```bash
 ralphmd run
 ```
 
-That's it. No directory scaffolding, no `cd`, no `npm start`.
+Open `ralph.md` to watch tasks get checked off as they complete. That's it — no directory scaffolding, no scripts, no boilerplate.
 
 ## How It Works
 
