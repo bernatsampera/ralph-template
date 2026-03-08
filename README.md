@@ -5,67 +5,78 @@ AI agent loop. Each task runs in a fresh invocation — no context pollution.
 
 https://github.com/user-attachments/assets/a13c7307-2504-4bb7-82cc-b658d9f9acc0
 
-## 1. Plan
+## Quick Start
 
 ```bash
-npx ralph-template ralph
+ralphmd init
+ralphmd plan "Refactor the auth module into separate files"
+ralphmd run
 ```
 
-Then tell your AI what tasks to create:
+That's it. No directory scaffolding, no `cd`, no `npm start`.
 
-```
-Read ralph/README.md and create a ralph setup for [YOUR GOAL].
-[Describe what needs to be done.]
-Do NOT execute any tasks — only create the plan files.
-```
+## How It Works
 
-This populates `fix_plan.md` with checkbox tasks. That's it — **the AI must not run any task yet**.
-
-## 2. Run
+### 1. Init — drop a config file
 
 ```bash
-cd ralph && npm start 20
+ralphmd init
+ralphmd init --recipe llms-txt
 ```
 
-Ralph picks up tasks one by one, each in a fresh invocation. Open `fix_plan.md` to watch them get ticked off.
+Creates a single `ralph.md` file in your project root. No subdirectory, no `package.json`, no scripts.
+
+### 2. Plan — AI creates structured tasks (planning only)
+
+```bash
+ralphmd plan "Add error handling to all API endpoints"
+```
+
+The AI analyzes your codebase and populates `ralph.md` with structured tasks. It runs in **restricted mode** — it can only read your code and write to `ralph.md`. No Bash, no Edit, no file modifications. The boundary between planning and execution is enforced structurally, not by prompting.
+
+### 3. Run — AI executes tasks one at a time
+
+```bash
+ralphmd run
+ralphmd run --max 20
+```
+
+Ralph reads `ralph.md`, validates the task format, then executes tasks one per iteration in fresh AI invocations. Open `ralph.md` to watch tasks get checked off.
 
 ---
 
-## Files
+## Structured Task Format
 
-| File | Purpose |
-|------|---------|
-| `fix_plan.md` | Task checklist. One `- [ ]` = one iteration |
-| `specs/` | Extra context for tasks that need it |
-| `AGENT.md` | Project config and quality standards |
-| `PROMPT.md` | Loop logic — **don't modify** |
-| `README.md` | Setup instructions (for you and the AI) |
+Every task in `ralph.md` must follow this format:
+
+```markdown
+- [ ] **Task title**
+  - Read: `src/auth/login.js`, `src/auth/session.js`
+  - Do: Split into separate authenticate(), authorize(), refreshToken() functions
+  - Output: Modified files in `src/auth/`
+  - Done when: All three functions exist and tests pass
+```
+
+| Field | Required | Purpose |
+|-------|----------|---------|
+| **Title** | Yes | Bold, concise description |
+| **Read** | Recommended | Files the AI should study before starting |
+| **Do** | Yes | Specific instructions — unambiguous enough for a fresh AI session |
+| **Output** | Recommended | What files or changes this task produces |
+| **Done when** | Yes | Concrete acceptance criteria |
+
+`ralphmd validate` checks this format before running. Malformed tasks are flagged.
 
 ## Recipes
 
-Recipes are pre-packaged setups for common tasks. Instead of manually writing specs and describing your goal each time, a recipe scaffolds ralph with everything pre-configured — specs, AI instructions, all of it.
-
-### Using a recipe
+Recipes are pre-packaged setups for common tasks.
 
 ```bash
-npx ralph-template ralph --recipe llms-txt
+ralphmd init --recipe llms-txt
+ralphmd plan
 ```
 
-This creates `ralph/` with the recipe's specs already in `specs/` and recipe-specific instructions baked into `README.md`. Then tell your AI:
-
-```
-Read ralph/README.md and create a plan. Do NOT execute any tasks.
-```
-
-The AI reads the README, sees the recipe instructions, analyzes your project, and creates `fix_plan.md`. You watch it work, then run `cd ralph && npm start 20`.
-
-To see all available recipes:
-
-```bash
-npx ralph-template --list-recipes
-```
-
-### Available recipes
+Available recipes:
 
 | Recipe | Description |
 |--------|-------------|
@@ -73,56 +84,24 @@ npx ralph-template --list-recipes
 | `llms-txt-general` | Create hierarchical llms.txt documentation for any subject (website, book, API, docs, etc.) |
 | `self-improve` | Analyze, evaluate, and implement clear-win improvements for any part of a project |
 
-### Creating a new recipe
+List all: `ralphmd list-recipes`
 
-A recipe is a folder inside `recipes/` with this structure:
+### Creating a recipe
 
 ```
 recipes/my-recipe/
 ├── recipe.json          # name + description
-├── instructions.md      # AI planning instructions (injected into README)
+├── instructions.md      # AI planning instructions (injected into ralph.md)
 └── specs/               # reference files the AI needs
     └── my-guide.md
 ```
 
-**Step 1 — Create the folder:**
+## Commands
 
 ```bash
-mkdir -p recipes/my-recipe/specs
-```
-
-**Step 2 — Add `recipe.json`** with a name and description:
-
-```json
-{
-  "name": "my-recipe",
-  "description": "Short description of what this recipe does"
-}
-```
-
-**Step 3 — Add `instructions.md`** with AI planning instructions. This gets injected into the README's "AI Setup Instructions" section, telling the AI exactly what to plan. Example:
-
-```markdown
-### Recipe: My Recipe Name
-
-Read `specs/my-guide.md` to understand the approach.
-
-Analyze the project. Then create tasks in `fix_plan.md` to [describe the goal].
-
-Each task should [describe the task granularity].
-```
-
-**Step 4 — Add spec files** to `specs/`. These are reference materials the AI reads while creating the plan (guides, conventions, examples).
-
-**Step 5 (optional) — Add a custom `AGENT.md`** to override the default agent instructions for task execution.
-
-**That's it.** Now `npx ralph-template ralph --recipe my-recipe` will scaffold ralph with your specs and instructions ready to go.
-
-## Config Management
-
-```bash
-npm run ralph:save -- my-task     # save
-npm run ralph:load -- my-task     # restore
-npm run ralph:list                # list all
-npm run ralph:new                 # reset to blank
+ralphmd init [--recipe <name>]     # Create ralph.md in current directory
+ralphmd plan "<goal>"              # AI creates tasks (restricted mode)
+ralphmd run [--max <n>]            # Execute tasks one at a time
+ralphmd validate                   # Check task format
+ralphmd list-recipes               # Show available recipes
 ```

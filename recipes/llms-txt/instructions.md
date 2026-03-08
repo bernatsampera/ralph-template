@@ -1,10 +1,10 @@
 ### Recipe: Add llms.txt Documentation
 
-Read `specs/llms-txt-guide.md` to understand the llms.txt documentation system.
+Read the **Reference** section below to understand the llms.txt documentation system.
 
-Analyze the project in the parent directory. Understand the tech stack, directory structure, and major subsystems.
+Analyze the project. Understand the tech stack, directory structure, and major subsystems.
 
-Create tasks in `fix_plan.md` to add llms.txt files to this project:
+Create tasks in `ralph.md` to add llms.txt files to this project:
 1. Root llms.txt first
 2. Domain/subsystem llms.txt files next
 3. Feature-level llms.txt files last

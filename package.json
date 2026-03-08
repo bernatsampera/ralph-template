@@ -1,13 +1,13 @@
 {
-  "name": "ralph-template",
-  "version": "1.15.0",
-  "description": "Scaffold an autonomous AI agent loop. Define tasks in markdown, let the AI execute them.",
+  "name": "ralphmd",
+  "version": "2.0.0",
+  "description": "AI agent loop. Define tasks in markdown, let the AI execute them.",
   "bin": {
-    "ralph-template": "./bin/ralph-template.js"
+    "ralphmd": "./bin/ralph.js"
   },
   "files": [
     "bin",
-    "template",
+    "lib",
     "recipes"
   ],
   "keywords": [
@@ -15,8 +15,7 @@
     "agent",
     "claude",
     "automation",
-    "autonomous",
-    "opencode"
+    "autonomous"
   ],
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 ### Recipe: Create llms.txt Documentation for Any Subject
 
-Read `specs/llms-txt-general-guide.md` to understand the llms.txt documentation system and how it applies to general subjects (not just codebases).
+Read the **Reference** section below to understand the llms.txt documentation system and how it applies to general subjects (not just codebases).
 
 The user has specified a **subject** to document. This could be a website, documentation site, book, API reference, framework, concept, or any other topic. Identify:
 
@@ -14,7 +14,7 @@ If the source is a URL, explore it to understand its structure and content hiera
 - The source material has no URL (e.g., knowledge-based content about a book or concept)
 - The content is **synthesized** from dispersed sources and doesn't exist anywhere online as a single page (e.g., decision frameworks comparing options, strategy guides by profile, cross-cutting summaries that combine information from multiple sources)
 
-Create tasks in `fix_plan.md` to produce llms.txt files for this subject:
+Create tasks in `ralph.md` to produce llms.txt files for this subject:
 1. Root llms.txt first — overview of the entire subject
 2. Major topic/section llms.txt files next — one per major area
 3. Sub-topic llms.txt files as needed for complex areas
@@ -25,4 +25,4 @@ Each task should create ONE llms.txt navigation file. Be specific about:
 - What original URLs it should link to
 - What links it should include to other llms.txt files in the hierarchy
 
-Output all files into the parent directory (../) so the llms.txt tree lives alongside this ralph directory.
+Output all files into the project directory so the llms.txt tree lives in the project.
